@@ -10,7 +10,6 @@ using System.Windows.Forms;
 
 namespace BacklogKiller
 {
-    //TODO: renomear form
     public partial class FrmMain : Form
     {
         private enum EnumColumns
@@ -32,8 +31,7 @@ namespace BacklogKiller
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
-            //TODO: icon
-            //Icon = Properties.Resources.magic_ico;
+            Icon = Properties.Resources.ico_main;
             stsStatus.Text = MENSAGEM_INICIAL;
 
             FormatDgvSubstitutions();

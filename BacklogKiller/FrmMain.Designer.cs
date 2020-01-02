@@ -139,7 +139,7 @@
             this.Controls.Add(this.dgvSubstitutions);
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Multiple Search, Copy and Replace Files - DDS Sistemas";
+            this.Text = "Backlog Killer - DDS Sistemas";
             this.Load += new System.EventHandler(this.FrmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvSubstitutions)).EndInit();
             this.toolStrip1.ResumeLayout(false);

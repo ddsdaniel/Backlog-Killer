@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\ico_main.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Flunt, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Flunt.1.0.4\lib\netstandard2.0\Flunt.dll</HintPath>
@@ -99,6 +102,12 @@
       <Project>{9b6b7e6d-979c-4985-83fb-0bc189bd8f73}</Project>
       <Name>BacklogKiller.ClassLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ico_main.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\png_main_512_512.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
