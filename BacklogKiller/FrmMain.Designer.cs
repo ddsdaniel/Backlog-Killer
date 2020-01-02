@@ -123,7 +123,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(104, 13);
             this.label1.TabIndex = 13;
-            this.label1.Text = "Project directory root";
+            this.label1.Text = "Project root directory";
             // 
             // FrmMain
             // 
