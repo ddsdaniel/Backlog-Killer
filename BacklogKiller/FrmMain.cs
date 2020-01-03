@@ -1,10 +1,12 @@
 ﻿using BacklogKiller.ClassLibrary.Services;
 using BacklogKiller.ClassLibrary.ValueObjects;
 using BacklogKiller.ClassLibrary.ViewModels;
+using BacklogKiller.Resources.Languages;
 using Flunt.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -21,6 +23,7 @@ namespace BacklogKiller
 
         //TODO: salvar no caminho temporário do usuário
         private const string FILE_FORM_STATUS = "form_status.xml";
+        private LanguageHelper _languageHelper;
 
         //TODO: resource string file        
 
@@ -33,10 +36,24 @@ namespace BacklogKiller
         {
             Icon = Properties.Resources.ico_main;
 
+            //TODO: dinamic cultureInfo
+            var cultureInfo = new CultureInfo("pt-BR");
+            _languageHelper = new LanguageHelper(cultureInfo);
+            RecoveryStrings();
+
             ShowVersion();
+
 
             FormatDgvSubstitutions();
             RecoveryFormStatus();
+        }
+
+        private void RecoveryStrings()
+        {
+            lblSubstitutions.Text = _languageHelper.GetString(Strings.Substitutions);
+            lblRootDirectory.Text = _languageHelper.GetString(Strings.ProjectRootDirectory);
+            tsbAnalyze.Text = _languageHelper.GetString(Strings.Analyze);
+            tsbAnalyze.ToolTipText = tsbAnalyze.Text;
         }
 
         private void ShowVersion()
@@ -74,10 +91,10 @@ namespace BacklogKiller
         private void FormatDgvSubstitutions()
         {
             dgvSubstitutions.ColumnCount = 2;
-            dgvSubstitutions.Columns[(int)EnumColumns.Find].HeaderText = "Localizar";
+            dgvSubstitutions.Columns[(int)EnumColumns.Find].HeaderText = _languageHelper.GetString(Strings.ToLocate);
             dgvSubstitutions.Columns[(int)EnumColumns.Find].Width = (dgvSubstitutions.Width / 2) - 20;
 
-            dgvSubstitutions.Columns[(int)EnumColumns.ReplaceWith].HeaderText = "Substituir por";
+            dgvSubstitutions.Columns[(int)EnumColumns.ReplaceWith].HeaderText = _languageHelper.GetString(Strings.ReplaceWith);
             dgvSubstitutions.Columns[(int)EnumColumns.ReplaceWith].Width = dgvSubstitutions.Columns[(int)EnumColumns.Find].Width;
         }
 
@@ -120,7 +137,7 @@ namespace BacklogKiller
             return substitutions;
         }
 
-        private void tsbAnalisar_Click(object sender, EventArgs e)
+        private void tsbAnalyze_Click(object sender, EventArgs e)
         {
             try
             {
@@ -141,14 +158,25 @@ namespace BacklogKiller
 
                     var files = analiseService.GetFiles();
                     if (files.Count == 0)
-                        MessageBox.Show("Nenhuma sugestão compatível com as configurações inseridas.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    {
+                        MessageBox.Show(
+                            _languageHelper.GetString(Strings.EmptyResult),
+                            _languageHelper.GetString(Strings.Alert),
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Exclamation
+                            );
+                    }
                     else
                         ShowResult(files, analiseService);
                 }
             }
             catch (Exception erro)
             {
-                MessageBox.Show($"{erro.Message}\n\n{erro.StackTrace}", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show($"{erro.Message}\n\n{erro.StackTrace}",
+                    _languageHelper.GetString(Strings.Alert),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation
+                    );
             }
             finally
             {
@@ -158,7 +186,7 @@ namespace BacklogKiller
 
         private void ShowResult(List<ModifiedCodeFile> files, AnalyzeService analiseService)
         {
-            var formResult = new FrmResult(files, analiseService)
+            var formResult = new FrmResult(files, analiseService, _languageHelper)
             {
                 Icon = Icon
             };
@@ -181,7 +209,13 @@ namespace BacklogKiller
             {
                 messages.AppendLine(item.Message);
             }
-            MessageBox.Show(messages.ToString(), "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+            MessageBox.Show(
+                messages.ToString(),
+                _languageHelper.GetString(Strings.Alert),
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation
+                );
         }
 
         private void btnOpenDirectoryDialog_Click(object sender, EventArgs e)
