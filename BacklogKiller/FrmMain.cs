@@ -25,8 +25,6 @@ namespace BacklogKiller
         private const string FILE_FORM_STATUS = "form_status.xml";
         private LanguageService _languageService;
 
-        //TODO: resource string file        
-
         public FrmMain()
         {
             InitializeComponent();
