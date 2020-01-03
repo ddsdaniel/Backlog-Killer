@@ -35,10 +35,7 @@ namespace BacklogKiller
         private void FrmMain_Load(object sender, EventArgs e)
         {
             Icon = Properties.Resources.ico_main;
-
-            //TODO: dinamic cultureInfo
-            var cultureInfo = new CultureInfo("pt-BR");
-            _languageHelper = new LanguageHelper(cultureInfo);
+            
             RecoveryStrings();
 
             ShowVersion();
@@ -50,6 +47,8 @@ namespace BacklogKiller
 
         private void RecoveryStrings()
         {
+            _languageHelper = new LanguageHelper();
+
             lblSubstitutions.Text = _languageHelper.GetString(Strings.Substitutions);
             lblRootDirectory.Text = _languageHelper.GetString(Strings.ProjectRootDirectory);
             tsbAnalyze.Text = _languageHelper.GetString(Strings.Analyze);

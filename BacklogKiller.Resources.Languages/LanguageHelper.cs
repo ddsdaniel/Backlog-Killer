@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Reflection;
 using System.Resources;
 
@@ -10,9 +11,9 @@ namespace BacklogKiller.Resources.Languages
         public CultureInfo _cultureInfo { get; private set; }
 
 
-        public LanguageHelper(CultureInfo cultureInfo)
+        public LanguageHelper()
         {
-            _cultureInfo = cultureInfo;
+            _cultureInfo = CultureInfo.CurrentUICulture;
             var assembly = Assembly.GetExecutingAssembly();
             _resourceManager = new ResourceManager(
                 baseName: "BacklogKiller.Resources.Languages.Resources.Resource",
@@ -22,7 +23,20 @@ namespace BacklogKiller.Resources.Languages
 
         public string GetString(Strings key)
         {
-            return _resourceManager.GetString(key.ToString(), _cultureInfo);
+            try
+            {
+                return _resourceManager.GetString(key.ToString(), _cultureInfo);
+            }
+            catch (MissingManifestResourceException)
+            {
+                //defines English as the default culture
+                _cultureInfo = new CultureInfo("en");
+                return GetString(key);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
     }
