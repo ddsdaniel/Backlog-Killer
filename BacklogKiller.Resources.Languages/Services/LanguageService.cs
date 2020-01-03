@@ -3,15 +3,15 @@ using System.Globalization;
 using System.Reflection;
 using System.Resources;
 
-namespace BacklogKiller.Resources.Languages
+namespace BacklogKiller.Resources.Languages.Services
 {
-    public class LanguageHelper
+    public class LanguageService
     {
         private readonly ResourceManager _resourceManager;
         public CultureInfo _cultureInfo { get; private set; }
 
 
-        public LanguageHelper()
+        public LanguageService()
         {
             _cultureInfo = CultureInfo.CurrentUICulture;
             var assembly = Assembly.GetExecutingAssembly();

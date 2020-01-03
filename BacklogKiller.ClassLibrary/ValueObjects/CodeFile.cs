@@ -1,6 +1,7 @@
-﻿using Flunt.Notifications;
+﻿using BacklogKiller.Resources.Languages;
+using BacklogKiller.Resources.Languages.Services;
+using Flunt.Notifications;
 using Flunt.Validations;
-using System.Drawing;
 using System.IO;
 
 namespace BacklogKiller.ClassLibrary.ValueObjects
@@ -15,9 +16,11 @@ namespace BacklogKiller.ClassLibrary.ValueObjects
 
         public CodeFile(string fullPath, CodeDirectory rootDirectory, string content)
         {
+            var languageService = new LanguageService();
+
             AddNotifications(new Contract()
-               .IsNotNullOrEmpty(fullPath, nameof(FullPath), "Caminho do arquivo não deve ser vazio")
-               .IsTrue(File.Exists(fullPath), nameof(FullPath), "Arquivo não encontrado")
+               .IsNotNullOrEmpty(fullPath, nameof(FullPath), languageService.GetString(Strings.FilePathMustNotBeEmpty))
+               .IsTrue(File.Exists(fullPath), nameof(FullPath), languageService.GetString(Strings.FileNotFound))
                );
 
             AddNotifications(rootDirectory);
@@ -72,7 +75,7 @@ namespace BacklogKiller.ClassLibrary.ValueObjects
 
             return outro.RelativePath == this.RelativePath &&
                 outro.Content == this.Content;
-        }        
+        }
 
         public static bool IsLocked(string filename)
         {

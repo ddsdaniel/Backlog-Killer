@@ -2,11 +2,11 @@
 using BacklogKiller.ClassLibrary.ValueObjects;
 using BacklogKiller.ClassLibrary.ViewModels;
 using BacklogKiller.Resources.Languages;
+using BacklogKiller.Resources.Languages.Services;
 using Flunt.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -23,7 +23,7 @@ namespace BacklogKiller
 
         //TODO: salvar no caminho temporário do usuário
         private const string FILE_FORM_STATUS = "form_status.xml";
-        private LanguageHelper _languageHelper;
+        private LanguageService _languageService;
 
         //TODO: resource string file        
 
@@ -47,11 +47,11 @@ namespace BacklogKiller
 
         private void RecoveryStrings()
         {
-            _languageHelper = new LanguageHelper();
+            _languageService = new LanguageService();
 
-            lblSubstitutions.Text = _languageHelper.GetString(Strings.Substitutions);
-            lblRootDirectory.Text = _languageHelper.GetString(Strings.ProjectRootDirectory);
-            tsbAnalyze.Text = _languageHelper.GetString(Strings.Analyze);
+            lblSubstitutions.Text = _languageService.GetString(Strings.Substitutions);
+            lblRootDirectory.Text = _languageService.GetString(Strings.ProjectRootDirectory);
+            tsbAnalyze.Text = _languageService.GetString(Strings.Analyze);
             tsbAnalyze.ToolTipText = tsbAnalyze.Text;
         }
 
@@ -90,10 +90,10 @@ namespace BacklogKiller
         private void FormatDgvSubstitutions()
         {
             dgvSubstitutions.ColumnCount = 2;
-            dgvSubstitutions.Columns[(int)EnumColumns.Find].HeaderText = _languageHelper.GetString(Strings.ToLocate);
+            dgvSubstitutions.Columns[(int)EnumColumns.Find].HeaderText = _languageService.GetString(Strings.ToLocate);
             dgvSubstitutions.Columns[(int)EnumColumns.Find].Width = (dgvSubstitutions.Width / 2) - 20;
 
-            dgvSubstitutions.Columns[(int)EnumColumns.ReplaceWith].HeaderText = _languageHelper.GetString(Strings.ReplaceWith);
+            dgvSubstitutions.Columns[(int)EnumColumns.ReplaceWith].HeaderText = _languageService.GetString(Strings.ReplaceWith);
             dgvSubstitutions.Columns[(int)EnumColumns.ReplaceWith].Width = dgvSubstitutions.Columns[(int)EnumColumns.Find].Width;
         }
 
@@ -159,8 +159,8 @@ namespace BacklogKiller
                     if (files.Count == 0)
                     {
                         MessageBox.Show(
-                            _languageHelper.GetString(Strings.EmptyResult),
-                            _languageHelper.GetString(Strings.Alert),
+                            _languageService.GetString(Strings.EmptyResult),
+                            _languageService.GetString(Strings.Alert),
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Exclamation
                             );
@@ -172,7 +172,7 @@ namespace BacklogKiller
             catch (Exception erro)
             {
                 MessageBox.Show($"{erro.Message}\n\n{erro.StackTrace}",
-                    _languageHelper.GetString(Strings.Alert),
+                    _languageService.GetString(Strings.Alert),
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation
                     );
@@ -185,7 +185,7 @@ namespace BacklogKiller
 
         private void ShowResult(List<ModifiedCodeFile> files, AnalyzeService analiseService)
         {
-            var formResult = new FrmResult(files, analiseService, _languageHelper)
+            var formResult = new FrmResult(files, analiseService, _languageService)
             {
                 Icon = Icon
             };
@@ -211,7 +211,7 @@ namespace BacklogKiller
 
             MessageBox.Show(
                 messages.ToString(),
-                _languageHelper.GetString(Strings.Alert),
+                _languageService.GetString(Strings.Alert),
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Exclamation
                 );

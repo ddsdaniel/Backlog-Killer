@@ -12,6 +12,14 @@
         Results,
         NewFiles,
         ModifiedFiles,
-        GenerateSelectedFiles
+        GenerateSelectedFiles,
+        DirectoryPathMustNotBeEmpty,
+        DirectoryNotFound,
+        FilePathMustNotBeEmpty,
+        FileNotFound,
+        OverrideListMustNotBeEmpty,
+        FilesMustBeDifferent,
+        FindCannotBeNullOrEmpty,
+        FindAndReplaceWithMustBeDifferent
     }
 }

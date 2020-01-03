@@ -1,6 +1,7 @@
 ﻿using BacklogKiller.ClassLibrary.Services;
 using BacklogKiller.ClassLibrary.ValueObjects;
 using BacklogKiller.Resources.Languages;
+using BacklogKiller.Resources.Languages.Services;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -18,15 +19,15 @@ namespace BacklogKiller
 
         private List<ModifiedCodeFile> _files;
         private AnalyzeService _analyzeService;
-        private LanguageHelper _languageHelper;
+        private LanguageService _languageService;
 
-        public FrmResult(List<ModifiedCodeFile> files, AnalyzeService analyzeService, LanguageHelper languageHelper)
+        public FrmResult(List<ModifiedCodeFile> files, AnalyzeService analyzeService, LanguageService languageService)
         {
             InitializeComponent();
 
             _files = files;
             _analyzeService = analyzeService;
-            _languageHelper = languageHelper;
+            _languageService = languageService;
         }
 
         private void FrmResult_Load(object sender, EventArgs e)
@@ -46,10 +47,10 @@ namespace BacklogKiller
 
         private void RecoveryStrings()
         {
-            Text = _languageHelper.GetString(Strings.Results);
-            tabNewFiles.Text = _languageHelper.GetString(Strings.NewFiles);
-            tabModifiedFiles.Text = _languageHelper.GetString(Strings.ModifiedFiles);
-            btnGenerateSelectedFiles.Text = _languageHelper.GetString(Strings.GenerateSelectedFiles);
+            Text = _languageService.GetString(Strings.Results);
+            tabNewFiles.Text = _languageService.GetString(Strings.NewFiles);
+            tabModifiedFiles.Text = _languageService.GetString(Strings.ModifiedFiles);
+            btnGenerateSelectedFiles.Text = _languageService.GetString(Strings.GenerateSelectedFiles);
         }
 
         private void FormatListView(ListView listView)
