@@ -102,6 +102,10 @@
       <Project>{9b6b7e6d-979c-4985-83fb-0bc189bd8f73}</Project>
       <Name>BacklogKiller.ClassLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BacklogKiller.Resources.Languages\BacklogKiller.Resources.Languages.csproj">
+      <Project>{12EFA0D7-5115-476C-B228-F993CFB55213}</Project>
+      <Name>BacklogKiller.Resources.Languages</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\png_main_512_512.png" />
@@ -111,6 +115,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\png_play_32_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\png_search_16_16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

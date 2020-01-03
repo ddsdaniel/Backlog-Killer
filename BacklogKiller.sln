@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BacklogKiller", "BacklogKiller\BacklogKiller.csproj", "{C9405F27-FC72-474E-A495-590DF703C0B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BacklogKiller.ClassLibrary", "BacklogKiller.ClassLibrary\BacklogKiller.ClassLibrary.csproj", "{9B6B7E6D-979C-4985-83FB-0BC189BD8F73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BacklogKiller.ClassLibrary", "BacklogKiller.ClassLibrary\BacklogKiller.ClassLibrary.csproj", "{9B6B7E6D-979C-4985-83FB-0BC189BD8F73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BacklogKiller.Resources.Languages", "BacklogKiller.Resources.Languages\BacklogKiller.Resources.Languages.csproj", "{12EFA0D7-5115-476C-B228-F993CFB55213}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{9B6B7E6D-979C-4985-83FB-0BC189BD8F73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B6B7E6D-979C-4985-83FB-0BC189BD8F73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B6B7E6D-979C-4985-83FB-0BC189BD8F73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12EFA0D7-5115-476C-B228-F993CFB55213}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12EFA0D7-5115-476C-B228-F993CFB55213}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12EFA0D7-5115-476C-B228-F993CFB55213}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12EFA0D7-5115-476C-B228-F993CFB55213}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

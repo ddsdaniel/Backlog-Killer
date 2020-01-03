@@ -1,4 +1,6 @@
-﻿using Flunt.Notifications;
+﻿using BacklogKiller.Resources.Languages;
+using BacklogKiller.Resources.Languages.Services;
+using Flunt.Notifications;
 using Flunt.Validations;
 using System.IO;
 
@@ -10,9 +12,11 @@ namespace BacklogKiller.ClassLibrary.ValueObjects
 
         public CodeDirectory(string path)
         {
+            var languageService = new LanguageService();
+
             AddNotifications(new Contract()
-               .IsNotNullOrEmpty(path, nameof(Path), "Caminho do diretório não deve ser vazio")
-               .IsTrue(Directory.Exists(path), nameof(Path), "Diretório não encontrado")
+               .IsNotNullOrEmpty(path, nameof(Path), languageService.GetString(Strings.DirectoryPathMustNotBeEmpty))
+               .IsTrue(Directory.Exists(path), nameof(Path), languageService.GetString(Strings.DirectoryNotFound))
                );
 
             Path = path;
