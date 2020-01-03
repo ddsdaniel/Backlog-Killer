@@ -1,5 +1,7 @@
 ﻿using BacklogKiller.ClassLibrary.Services;
 using BacklogKiller.ClassLibrary.ValueObjects;
+using BacklogKiller.Resources.Languages;
+using BacklogKiller.Resources.Languages.Services;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -15,20 +17,24 @@ namespace BacklogKiller
             Path
         }
 
-        public List<ModifiedCodeFile> Files { get; private set; }
-        public AnalyzeService AnalyzeService { get; private set; }
+        private List<ModifiedCodeFile> _files;
+        private AnalyzeService _analyzeService;
+        private LanguageService _languageService;
 
-        public FrmResult(List<ModifiedCodeFile> files, AnalyzeService analyzeService)
+        public FrmResult(List<ModifiedCodeFile> files, AnalyzeService analyzeService, LanguageService languageService)
         {
             InitializeComponent();
 
-            Files = files;
-            AnalyzeService = analyzeService;
+            _files = files;
+            _analyzeService = analyzeService;
+            _languageService = languageService;
         }
 
         private void FrmResult_Load(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
+
+            RecoveryStrings();            
 
             FormatListView(lvwModifiedFiles);
             FormatListView(lvwNewFiles);
@@ -37,6 +43,14 @@ namespace BacklogKiller
             LoadFiles();
 
             Cursor = Cursors.Default;
+        }
+
+        private void RecoveryStrings()
+        {
+            Text = _languageService.GetString(Strings.Results);
+            tabNewFiles.Text = _languageService.GetString(Strings.NewFiles);
+            tabModifiedFiles.Text = _languageService.GetString(Strings.ModifiedFiles);
+            btnGenerateSelectedFiles.Text = _languageService.GetString(Strings.GenerateSelectedFiles);
         }
 
         private void FormatListView(ListView listView)
@@ -111,7 +125,7 @@ namespace BacklogKiller
             lvwModifiedFiles.SmallImageList = imageList;
             lvwNewFiles.SmallImageList = imageList;
 
-            foreach (var file in Files)
+            foreach (var file in _files)
             {
                 var extension = Path.GetExtension(file.OriginalFile.FullPath);
                 if (!imageList.Images.Keys.Contains(extension))
@@ -162,7 +176,7 @@ namespace BacklogKiller
                 files.Add((ModifiedCodeFile)item.Tag);
             }
 
-            AnalyzeService.GenerateFiles(files);
+            _analyzeService.GenerateFiles(files);
 
             //TODO: feedback
         }

@@ -1,16 +1,18 @@
 ﻿using BacklogKiller.ClassLibrary.Services;
 using BacklogKiller.ClassLibrary.ValueObjects;
 using BacklogKiller.ClassLibrary.ViewModels;
+using BacklogKiller.Resources.Languages;
+using BacklogKiller.Resources.Languages.Services;
 using Flunt.Notifications;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
 namespace BacklogKiller
 {
-    //TODO: renomear form
     public partial class FrmMain : Form
     {
         private enum EnumColumns
@@ -21,9 +23,7 @@ namespace BacklogKiller
 
         //TODO: salvar no caminho temporário do usuário
         private const string FILE_FORM_STATUS = "form_status.xml";
-
-        //TODO: resource string file
-        private const string MENSAGEM_INICIAL = "Informe um diretório e uma máscara para procurar os arquivos";
+        private LanguageService _languageService;
 
         public FrmMain()
         {
@@ -32,12 +32,32 @@ namespace BacklogKiller
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
-            //TODO: icon
-            //Icon = Properties.Resources.magic_ico;
-            stsStatus.Text = MENSAGEM_INICIAL;
+            Icon = Properties.Resources.ico_main;
+            
+            RecoveryStrings();
+
+            ShowVersion();
+
 
             FormatDgvSubstitutions();
             RecoveryFormStatus();
+        }
+
+        private void RecoveryStrings()
+        {
+            _languageService = new LanguageService();
+
+            lblSubstitutions.Text = _languageService.GetString(Strings.Substitutions);
+            lblRootDirectory.Text = _languageService.GetString(Strings.ProjectRootDirectory);
+            tsbAnalyze.Text = _languageService.GetString(Strings.Analyze);
+            tsbAnalyze.ToolTipText = tsbAnalyze.Text;
+        }
+
+        private void ShowVersion()
+        {
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            Text += $" - {fvi.FileVersion}";
         }
 
         private void RecoveryFormStatus()
@@ -68,10 +88,10 @@ namespace BacklogKiller
         private void FormatDgvSubstitutions()
         {
             dgvSubstitutions.ColumnCount = 2;
-            dgvSubstitutions.Columns[(int)EnumColumns.Find].HeaderText = "Localizar";
+            dgvSubstitutions.Columns[(int)EnumColumns.Find].HeaderText = _languageService.GetString(Strings.ToLocate);
             dgvSubstitutions.Columns[(int)EnumColumns.Find].Width = (dgvSubstitutions.Width / 2) - 20;
 
-            dgvSubstitutions.Columns[(int)EnumColumns.ReplaceWith].HeaderText = "Substituir por";
+            dgvSubstitutions.Columns[(int)EnumColumns.ReplaceWith].HeaderText = _languageService.GetString(Strings.ReplaceWith);
             dgvSubstitutions.Columns[(int)EnumColumns.ReplaceWith].Width = dgvSubstitutions.Columns[(int)EnumColumns.Find].Width;
         }
 
@@ -114,14 +134,13 @@ namespace BacklogKiller
             return substitutions;
         }
 
-        private void tsbAnalisar_Click(object sender, EventArgs e)
+        private void tsbAnalyze_Click(object sender, EventArgs e)
         {
             try
             {
                 Cursor = Cursors.WaitCursor;
 
                 //TODO: loading gif
-                stsStatus.Text = "Aplicando...";
 
                 var configuration = GetConfiguration();
                 var analiseService = new AnalyzeService(configuration);
@@ -136,17 +155,25 @@ namespace BacklogKiller
 
                     var files = analiseService.GetFiles();
                     if (files.Count == 0)
-                        MessageBox.Show("Nenhuma sugestão compatível com as configurações inseridas.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    {
+                        MessageBox.Show(
+                            _languageService.GetString(Strings.EmptyResult),
+                            _languageService.GetString(Strings.Alert),
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Exclamation
+                            );
+                    }
                     else
                         ShowResult(files, analiseService);
                 }
-
-                //    stsStatus.Text = lvwArquivos.CheckedItems.Count + " arquivo(s) gerado(s) instantaneamente, rápido não? Eu sei, de nada!";
-                stsStatus.Text = "Pronto";
             }
             catch (Exception erro)
             {
-                MessageBox.Show($"{erro.Message}\n\n{erro.StackTrace}", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show($"{erro.Message}\n\n{erro.StackTrace}",
+                    _languageService.GetString(Strings.Alert),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation
+                    );
             }
             finally
             {
@@ -156,7 +183,7 @@ namespace BacklogKiller
 
         private void ShowResult(List<ModifiedCodeFile> files, AnalyzeService analiseService)
         {
-            var formResult = new FrmResult(files, analiseService)
+            var formResult = new FrmResult(files, analiseService, _languageService)
             {
                 Icon = Icon
             };
@@ -179,7 +206,13 @@ namespace BacklogKiller
             {
                 messages.AppendLine(item.Message);
             }
-            MessageBox.Show(messages.ToString(), "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+            MessageBox.Show(
+                messages.ToString(),
+                _languageService.GetString(Strings.Alert),
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation
+                );
         }
 
         private void btnOpenDirectoryDialog_Click(object sender, EventArgs e)

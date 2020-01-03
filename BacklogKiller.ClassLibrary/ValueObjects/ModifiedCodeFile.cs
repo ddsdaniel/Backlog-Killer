@@ -1,4 +1,6 @@
-﻿using Flunt.Notifications;
+﻿using BacklogKiller.Resources.Languages;
+using BacklogKiller.Resources.Languages.Services;
+using Flunt.Notifications;
 using Flunt.Validations;
 
 namespace BacklogKiller.ClassLibrary.ValueObjects
@@ -10,8 +12,10 @@ namespace BacklogKiller.ClassLibrary.ValueObjects
 
         public ModifiedCodeFile(CodeFile originalFile, CodeFile modifiedFile)
         {
+            var languageService = new LanguageService();
+
             AddNotifications(new Contract()
-                .AreNotEquals(originalFile, modifiedFile,nameof(ModifiedFile), "Arquivos devem ser diferentes.")
+                .AreNotEquals(originalFile, modifiedFile,nameof(ModifiedFile), languageService.GetString(Strings.FilesMustBeDifferent))
                 );
 
             AddNotifications(originalFile);
