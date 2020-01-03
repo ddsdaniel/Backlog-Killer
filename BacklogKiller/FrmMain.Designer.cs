@@ -82,25 +82,25 @@
             // 
             this.txtProjectDirectoryRoot.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.txtProjectDirectoryRoot.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
-            this.txtProjectDirectoryRoot.Location = new System.Drawing.Point(12, 44);
+            this.txtProjectDirectoryRoot.Location = new System.Drawing.Point(12, 48);
             this.txtProjectDirectoryRoot.Name = "txtProjectDirectoryRoot";
             this.txtProjectDirectoryRoot.Size = new System.Drawing.Size(437, 20);
             this.txtProjectDirectoryRoot.TabIndex = 0;
             // 
             // btnOpenDirectoryDialog
             // 
-            this.btnOpenDirectoryDialog.Location = new System.Drawing.Point(455, 42);
+            this.btnOpenDirectoryDialog.Image = global::BacklogKiller.Properties.Resources.png_search_16_16;
+            this.btnOpenDirectoryDialog.Location = new System.Drawing.Point(455, 46);
             this.btnOpenDirectoryDialog.Name = "btnOpenDirectoryDialog";
-            this.btnOpenDirectoryDialog.Size = new System.Drawing.Size(32, 23);
+            this.btnOpenDirectoryDialog.Size = new System.Drawing.Size(24, 24);
             this.btnOpenDirectoryDialog.TabIndex = 1;
-            this.btnOpenDirectoryDialog.Text = "...";
             this.btnOpenDirectoryDialog.UseVisualStyleBackColor = true;
             this.btnOpenDirectoryDialog.Click += new System.EventHandler(this.btnOpenDirectoryDialog_Click);
             // 
             // lblRootDirectory
             // 
             this.lblRootDirectory.AutoSize = true;
-            this.lblRootDirectory.Location = new System.Drawing.Point(9, 28);
+            this.lblRootDirectory.Location = new System.Drawing.Point(9, 32);
             this.lblRootDirectory.Name = "lblRootDirectory";
             this.lblRootDirectory.Size = new System.Drawing.Size(104, 13);
             this.lblRootDirectory.TabIndex = 13;
