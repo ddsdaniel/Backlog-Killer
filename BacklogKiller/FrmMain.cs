@@ -4,6 +4,7 @@ using BacklogKiller.ClassLibrary.ViewModels;
 using Flunt.Notifications;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -21,8 +22,7 @@ namespace BacklogKiller
         //TODO: salvar no caminho temporário do usuário
         private const string FILE_FORM_STATUS = "form_status.xml";
 
-        //TODO: resource string file
-        private const string MENSAGEM_INICIAL = "Informe um diretório e uma máscara para procurar os arquivos";
+        //TODO: resource string file        
 
         public FrmMain()
         {
@@ -32,10 +32,18 @@ namespace BacklogKiller
         private void FrmMain_Load(object sender, EventArgs e)
         {
             Icon = Properties.Resources.ico_main;
-            stsStatus.Text = MENSAGEM_INICIAL;
+
+            ShowVersion();
 
             FormatDgvSubstitutions();
             RecoveryFormStatus();
+        }
+
+        private void ShowVersion()
+        {
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            Text += $" - {fvi.FileVersion}";
         }
 
         private void RecoveryFormStatus()
@@ -119,7 +127,6 @@ namespace BacklogKiller
                 Cursor = Cursors.WaitCursor;
 
                 //TODO: loading gif
-                stsStatus.Text = "Aplicando...";
 
                 var configuration = GetConfiguration();
                 var analiseService = new AnalyzeService(configuration);
@@ -138,9 +145,6 @@ namespace BacklogKiller
                     else
                         ShowResult(files, analiseService);
                 }
-
-                //    stsStatus.Text = lvwArquivos.CheckedItems.Count + " arquivo(s) gerado(s) instantaneamente, rápido não? Eu sei, de nada!";
-                stsStatus.Text = "Pronto";
             }
             catch (Exception erro)
             {

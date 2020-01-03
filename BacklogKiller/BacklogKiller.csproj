@@ -104,10 +104,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\png_main_512_512.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\ico_main.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\png_main_512_512.png" />
+    <None Include="Resources\png_play_32_32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

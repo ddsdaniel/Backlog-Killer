@@ -32,14 +32,11 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsbAnalisar = new System.Windows.Forms.ToolStripButton();
             this.label3 = new System.Windows.Forms.Label();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.stsStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.txtProjectDirectoryRoot = new System.Windows.Forms.TextBox();
             this.btnOpenDirectoryDialog = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSubstitutions)).BeginInit();
             this.toolStrip1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvSubstitutions
@@ -50,7 +47,7 @@
             this.dgvSubstitutions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSubstitutions.Location = new System.Drawing.Point(12, 93);
             this.dgvSubstitutions.Name = "dgvSubstitutions";
-            this.dgvSubstitutions.Size = new System.Drawing.Size(935, 315);
+            this.dgvSubstitutions.Size = new System.Drawing.Size(935, 335);
             this.dgvSubstitutions.TabIndex = 2;
             // 
             // toolStrip1
@@ -65,9 +62,10 @@
             // 
             // tsbAnalisar
             // 
+            this.tsbAnalisar.Image = global::BacklogKiller.Properties.Resources.png_play_32_32;
             this.tsbAnalisar.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbAnalisar.Name = "tsbAnalisar";
-            this.tsbAnalisar.Size = new System.Drawing.Size(53, 22);
+            this.tsbAnalisar.Size = new System.Drawing.Size(69, 22);
             this.tsbAnalisar.Text = "Analisar";
             this.tsbAnalisar.ToolTipText = "Copia todos os arquivos e aplica todas as substituições";
             this.tsbAnalisar.Click += new System.EventHandler(this.tsbAnalisar_Click);
@@ -80,22 +78,6 @@
             this.label3.Size = new System.Drawing.Size(70, 13);
             this.label3.TabIndex = 9;
             this.label3.Text = "Substituições";
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.stsStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 418);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(959, 22);
-            this.statusStrip1.TabIndex = 10;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // stsStatus
-            // 
-            this.stsStatus.Name = "stsStatus";
-            this.stsStatus.Size = new System.Drawing.Size(100, 17);
-            this.stsStatus.Text = "Mensagem inicial";
             // 
             // txtProjectDirectoryRoot
             // 
@@ -133,7 +115,6 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnOpenDirectoryDialog);
             this.Controls.Add(this.txtProjectDirectoryRoot);
-            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.dgvSubstitutions);
@@ -144,8 +125,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvSubstitutions)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -157,8 +136,6 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ToolStripButton tsbAnalisar;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel stsStatus;
         private System.Windows.Forms.TextBox txtProjectDirectoryRoot;
         private System.Windows.Forms.Button btnOpenDirectoryDialog;
         private System.Windows.Forms.Label label1;
