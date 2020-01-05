@@ -1,4 +1,5 @@
-﻿using BacklogKiller.ClassLibrary.Services;
+﻿using BacklogKiller.ClassLibrary.Extensions;
+using BacklogKiller.ClassLibrary.Services;
 using BacklogKiller.ClassLibrary.ValueObjects;
 using BacklogKiller.ClassLibrary.ViewModels;
 using BacklogKiller.Resources.Languages;
@@ -147,7 +148,12 @@ namespace BacklogKiller
 
                 if (analiseService.Invalid)
                 {
-                    ShowNotifications(analiseService);
+                    MessageBox.Show(
+                        analiseService.GetAllMessages(),
+                        _languageService.GetString(Strings.Alert),
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Exclamation
+                        );
                 }
                 else
                 {
@@ -196,24 +202,7 @@ namespace BacklogKiller
             var directory = new CodeDirectory(txtProjectDirectoryRoot.Text);
             var config = new Configuration(directory, substitutions);
             return config;
-        }
-
-        private void ShowNotifications(Notifiable notifiable)
-        {
-            //TODO: extension method
-            var messages = new StringBuilder();
-            foreach (var item in notifiable.Notifications)
-            {
-                messages.AppendLine(item.Message);
-            }
-
-            MessageBox.Show(
-                messages.ToString(),
-                _languageService.GetString(Strings.Alert),
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Exclamation
-                );
-        }
+        }        
 
         private void btnOpenDirectoryDialog_Click(object sender, EventArgs e)
         {
