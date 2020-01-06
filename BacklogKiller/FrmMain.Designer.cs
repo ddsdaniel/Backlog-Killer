@@ -49,6 +49,7 @@
             this.dgvSubstitutions.Name = "dgvSubstitutions";
             this.dgvSubstitutions.Size = new System.Drawing.Size(935, 335);
             this.dgvSubstitutions.TabIndex = 2;
+            this.dgvSubstitutions.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSubstitutions_CellEndEdit);
             // 
             // toolStrip1
             // 
