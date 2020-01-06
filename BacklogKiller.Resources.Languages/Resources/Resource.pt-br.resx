@@ -129,6 +129,9 @@
   <data name="DirectoryPathMustNotBeEmpty" xml:space="preserve">
     <value>Caminho do diretório não deve ser vazio</value>
   </data>
+  <data name="DoYouAcceptTheFollowingSuggestions" xml:space="preserve">
+    <value>Você aceita as seguintes sugestões?</value>
+  </data>
   <data name="EmptyResult" xml:space="preserve">
     <value>Nenhuma sugestão compatível com as configurações inseridas</value>
   </data>
@@ -147,6 +150,9 @@
   <data name="FindCannotBeNullOrEmpty" xml:space="preserve">
     <value>'Localizar' não pode ser nulo ou vazio</value>
   </data>
+  <data name="FindNotInCamelCaseFormat" xml:space="preserve">
+    <value>'Localizar' não está no formato camel case</value>
+  </data>
   <data name="GenerateSelectedFiles" xml:space="preserve">
     <value>Gerar arquivos selecionados</value>
   </data>
@@ -164,6 +170,9 @@
   </data>
   <data name="ReplaceWith" xml:space="preserve">
     <value>Substituir por</value>
+  </data>
+  <data name="ReplaceWithNotInCamelCaseFormat" xml:space="preserve">
+    <value>'Substituir por' não está no formato camel case</value>
   </data>
   <data name="Results" xml:space="preserve">
     <value>Resultados</value>
