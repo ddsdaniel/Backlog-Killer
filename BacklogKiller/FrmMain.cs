@@ -22,8 +22,7 @@ namespace BacklogKiller
             ReplaceWith
         }
 
-        //TODO: salvar no caminho temporário do usuário
-        private const string FILE_FORM_STATUS = "form_status.xml";
+        private string _pathFileFormState;
         private LanguageService _languageService;
 
         public FrmMain()
@@ -33,14 +32,14 @@ namespace BacklogKiller
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
-            Icon = Properties.Resources.ico_main;
+            Icon = Properties.Resources.ico_main;            
 
             RecoveryStrings();
 
             ShowVersion();
 
             FormatDgvSubstitutions();
-            RecoveryFormStatus();
+            RecoveryFormState();
         }
 
         private void RecoveryStrings()
@@ -60,13 +59,19 @@ namespace BacklogKiller
             Text += $" - {fvi.FileVersion}";
         }
 
-        private void RecoveryFormStatus()
+        private void RecoveryFormState()
         {
+            var directory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Backlog Killer");
+            if (!Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
+
+            _pathFileFormState = Path.Combine(directory, "form-state.xml");
+
             var serializeService = new SerializeService<ConfigurationViewModel>();
 
-            if (File.Exists(FILE_FORM_STATUS))
+            if (File.Exists(_pathFileFormState))
             {
-                var configurationViewModel = serializeService.Deserialize(FILE_FORM_STATUS);
+                var configurationViewModel = serializeService.Deserialize(_pathFileFormState);
                 txtProjectDirectoryRoot.Text = configurationViewModel.Directory;
 
                 dgvSubstitutions.AllowUserToAddRows = false;
@@ -100,8 +105,8 @@ namespace BacklogKiller
 
         private void SaveConfiguration()
         {
-            if (File.Exists(FILE_FORM_STATUS))
-                File.Delete(FILE_FORM_STATUS);
+            if (File.Exists(_pathFileFormState))
+                File.Delete(_pathFileFormState);
 
             var configuration = GetConfiguration();
             var configurationViewModel = new ConfigurationViewModel { Directory = configuration.ProjectDirectory.Path };
@@ -116,7 +121,7 @@ namespace BacklogKiller
             }
 
             var serializeService = new SerializeService<ConfigurationViewModel>();
-            serializeService.Serialize(configurationViewModel, FILE_FORM_STATUS);
+            serializeService.Serialize(configurationViewModel, _pathFileFormState);
         }
 
         private List<Replacement> GetSubstitutions()
@@ -222,6 +227,7 @@ namespace BacklogKiller
         private void dgvSubstitutions_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             ProcessSuggestions(e);
+            SaveConfiguration();
         }
 
         private void ProcessSuggestions(DataGridViewCellEventArgs e)
