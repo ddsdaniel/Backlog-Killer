@@ -4,11 +4,11 @@ using BacklogKiller.ClassLibrary.ValueObjects;
 using BacklogKiller.ClassLibrary.ViewModels;
 using BacklogKiller.Resources.Languages;
 using BacklogKiller.Resources.Languages.Services;
-using Flunt.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -16,7 +16,7 @@ namespace BacklogKiller
 {
     public partial class FrmMain : Form
     {
-        private enum EnumColumns
+        private enum Column
         {
             Find = 0,
             ReplaceWith
@@ -34,11 +34,10 @@ namespace BacklogKiller
         private void FrmMain_Load(object sender, EventArgs e)
         {
             Icon = Properties.Resources.ico_main;
-            
+
             RecoveryStrings();
 
             ShowVersion();
-
 
             FormatDgvSubstitutions();
             RecoveryFormStatus();
@@ -77,23 +76,26 @@ namespace BacklogKiller
                 {
                     dgvSubstitutions.Rows.Add();
 
-                    dgvSubstitutions.Rows[dgvSubstitutions.Rows.Count - 1].Cells[(int)EnumColumns.Find].Value = subs.Find;
-                    dgvSubstitutions.Rows[dgvSubstitutions.Rows.Count - 1].Cells[(int)EnumColumns.ReplaceWith].Value = subs.ReplaceWith;
+                    dgvSubstitutions.Rows[dgvSubstitutions.Rows.Count - 1].Cells[(int)Column.Find].Value = subs.Find;
+                    dgvSubstitutions.Rows[dgvSubstitutions.Rows.Count - 1].Cells[(int)Column.ReplaceWith].Value = subs.ReplaceWith;
                 }
-            }
 
-            dgvSubstitutions.AllowUserToAddRows = true;
-            dgvSubstitutions.AllowUserToDeleteRows = true;
+                dgvSubstitutions.AllowUserToAddRows = true;
+                dgvSubstitutions.AllowUserToDeleteRows = true;
+            }
         }
 
         private void FormatDgvSubstitutions()
         {
             dgvSubstitutions.ColumnCount = 2;
-            dgvSubstitutions.Columns[(int)EnumColumns.Find].HeaderText = _languageService.GetString(Strings.ToLocate);
-            dgvSubstitutions.Columns[(int)EnumColumns.Find].Width = (dgvSubstitutions.Width / 2) - 20;
+            dgvSubstitutions.Columns[(int)Column.Find].HeaderText = _languageService.GetString(Strings.ToLocate);
+            dgvSubstitutions.Columns[(int)Column.Find].Width = (dgvSubstitutions.Width / 2) - 20;
 
-            dgvSubstitutions.Columns[(int)EnumColumns.ReplaceWith].HeaderText = _languageService.GetString(Strings.ReplaceWith);
-            dgvSubstitutions.Columns[(int)EnumColumns.ReplaceWith].Width = dgvSubstitutions.Columns[(int)EnumColumns.Find].Width;
+            dgvSubstitutions.Columns[(int)Column.ReplaceWith].HeaderText = _languageService.GetString(Strings.ReplaceWith);
+            dgvSubstitutions.Columns[(int)Column.ReplaceWith].Width = dgvSubstitutions.Columns[(int)Column.Find].Width;
+
+            dgvSubstitutions.AllowUserToAddRows = true;
+            dgvSubstitutions.AllowUserToDeleteRows = true;
         }
 
         private void SaveConfiguration()
@@ -126,8 +128,8 @@ namespace BacklogKiller
                     continue;
 
                 var subs = new Replacement(
-                    find: linha.Cells[(int)EnumColumns.Find].Value.ToString(),
-                    replaceWith: linha.Cells[(int)EnumColumns.ReplaceWith].Value.ToString()
+                    find: linha.Cells[(int)Column.Find].Value.ToString(),
+                    replaceWith: linha.Cells[(int)Column.ReplaceWith].Value.ToString()
                     );
                 substitutions.Add(subs);
             }
@@ -202,7 +204,7 @@ namespace BacklogKiller
             var directory = new CodeDirectory(txtProjectDirectoryRoot.Text);
             var config = new Configuration(directory, substitutions);
             return config;
-        }        
+        }
 
         private void btnOpenDirectoryDialog_Click(object sender, EventArgs e)
         {
@@ -215,6 +217,70 @@ namespace BacklogKiller
 
             txtProjectDirectoryRoot.SelectAll();
             txtProjectDirectoryRoot.Focus();
+        }
+
+        private void dgvSubstitutions_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            ProcessSuggestions(e);
+        }
+
+        private void ProcessSuggestions(DataGridViewCellEventArgs e)
+        {
+            var findValue = dgvSubstitutions.Rows[e.RowIndex].Cells[(int)Column.Find].Value;
+            var replaceWithValue = dgvSubstitutions.Rows[e.RowIndex].Cells[(int)Column.ReplaceWith].Value;
+
+            if (findValue != null && replaceWithValue != null)
+            {
+                var camelCaseReplacement = new Replacement
+                    (
+                        find: findValue.ToString(),
+                        replaceWith: replaceWithValue.ToString()
+                    );
+
+                var substitutions = GetSubstitutions();
+                var caseSubstitutionsService = new CaseSubstitutionsService(camelCaseReplacement, substitutions);
+                if (caseSubstitutionsService.Valid)
+                {
+                    var suggestions = caseSubstitutionsService.Suggest();
+                    if (suggestions.Any())
+                    {
+                        AskAcceptSuggestions(suggestions);
+                    }
+                }
+            }
+        }
+
+        private void AskAcceptSuggestions(List<Replacement> suggestions)
+        {
+            var question = new StringBuilder();
+            question.AppendLine(_languageService.GetString(Strings.DoYouAcceptTheFollowingSuggestions));
+            foreach (var item in suggestions)
+            {
+                question.AppendLine(item.ToString());
+            }
+
+            var alert = _languageService.GetString(Strings.Alert);
+            if (MessageBox.Show(question.ToString(), alert, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                AddToGrid(suggestions);
+            }
+        }
+
+        private void AddToGrid(List<Replacement> suggestions)
+        {
+            dgvSubstitutions.AllowUserToAddRows = false;
+            dgvSubstitutions.AllowUserToDeleteRows = false;
+
+            foreach (var item in suggestions)
+            {
+                dgvSubstitutions.Rows.Add();
+
+                dgvSubstitutions.Rows[dgvSubstitutions.Rows.Count - 1].Cells[(int)Column.Find].Value = item.Find;
+                dgvSubstitutions.Rows[dgvSubstitutions.Rows.Count - 1].Cells[(int)Column.ReplaceWith].Value = item.ReplaceWith;
+            }
+
+            dgvSubstitutions.AllowUserToAddRows = true;
+            dgvSubstitutions.AllowUserToDeleteRows = true;
         }
     }
 }
