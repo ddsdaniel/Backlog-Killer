@@ -27,5 +27,10 @@ namespace BacklogKiller.ClassLibrary.ValueObjects
         {
             return target.Replace(Find, ReplaceWith);
         }
+
+        public override string ToString()
+        {
+            return $"'{Find}' => '{ReplaceWith}'";
+        }
     }
 }
