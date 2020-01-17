@@ -23,6 +23,7 @@
         FindAndReplaceWithMustBeDifferent,
         FindNotInCamelCaseFormat,
         ReplaceWithNotInCamelCaseFormat,
-        DoYouAcceptTheFollowingSuggestions
+        DoYouAcceptTheFollowingSuggestions,
+        Done
     }
 }

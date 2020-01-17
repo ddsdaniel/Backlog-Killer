@@ -34,6 +34,7 @@
             this.lvwNewFiles = new System.Windows.Forms.ListView();
             this.tabModifiedFiles = new System.Windows.Forms.TabPage();
             this.lvwModifiedFiles = new System.Windows.Forms.ListView();
+            this.snackBar1 = new BacklogKiller.Controls.SnackBar();
             this.tabControl1.SuspendLayout();
             this.tabNewFiles.SuspendLayout();
             this.tabModifiedFiles.SuspendLayout();
@@ -110,11 +111,21 @@
             this.lvwModifiedFiles.TabIndex = 12;
             this.lvwModifiedFiles.UseCompatibleStateImageBehavior = false;
             // 
+            // snackBar1
+            // 
+            this.snackBar1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.snackBar1.Location = new System.Drawing.Point(278, 405);
+            this.snackBar1.Name = "snackBar1";
+            this.snackBar1.Size = new System.Drawing.Size(242, 37);
+            this.snackBar1.TabIndex = 13;
+            this.snackBar1.Visible = false;
+            // 
             // FrmResult
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(799, 450);
+            this.Controls.Add(this.snackBar1);
             this.Controls.Add(this.tabControl1);
             this.KeyPreview = true;
             this.Name = "FrmResult";
@@ -137,5 +148,6 @@
         private System.Windows.Forms.TabPage tabModifiedFiles;
         private System.Windows.Forms.ListView lvwModifiedFiles;
         private System.Windows.Forms.Button btnGenerateSelectedFiles;
+        private Controls.SnackBar snackBar1;
     }
 }
