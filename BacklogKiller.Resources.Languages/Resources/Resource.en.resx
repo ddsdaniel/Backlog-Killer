@@ -129,6 +129,9 @@
   <data name="DirectoryPathMustNotBeEmpty" xml:space="preserve">
     <value>Directory path must not be empty</value>
   </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done</value>
+  </data>
   <data name="DoYouAcceptTheFollowingSuggestions" xml:space="preserve">
     <value>Do you accept the following suggestions?</value>
   </data>

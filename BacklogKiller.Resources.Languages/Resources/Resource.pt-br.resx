@@ -129,6 +129,9 @@
   <data name="DirectoryPathMustNotBeEmpty" xml:space="preserve">
     <value>Caminho do diretório não deve ser vazio</value>
   </data>
+  <data name="Done" xml:space="preserve">
+    <value>Pronto</value>
+  </data>
   <data name="DoYouAcceptTheFollowingSuggestions" xml:space="preserve">
     <value>Você aceita as seguintes sugestões?</value>
   </data>
