@@ -287,6 +287,6 @@ namespace BacklogKiller
 
             dgvSubstitutions.AllowUserToAddRows = true;
             dgvSubstitutions.AllowUserToDeleteRows = true;
-        }
+        }      
     }
 }
