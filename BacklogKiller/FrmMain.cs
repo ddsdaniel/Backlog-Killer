@@ -129,7 +129,7 @@ namespace BacklogKiller
             var substitutions = new List<Replacement>();
             foreach (DataGridViewRow linha in dgvSubstitutions.Rows)
             {
-                if (linha.IsNewRow)
+                if (linha.IsNewRow || linha.Cells[(int)Column.Find].Value == null || linha.Cells[(int)Column.ReplaceWith].Value == null)
                     continue;
 
                 var subs = new Replacement(
