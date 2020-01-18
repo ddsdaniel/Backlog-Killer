@@ -176,7 +176,7 @@ namespace BacklogKiller
                 files.Add((ModifiedCodeFile)item.Tag);
             }
 
-            //_analyzeService.GenerateFiles(files);
+            _analyzeService.GenerateFiles(files);
 
             snackBar1.Show(_languageService.GetString(Strings.Done));
         }
