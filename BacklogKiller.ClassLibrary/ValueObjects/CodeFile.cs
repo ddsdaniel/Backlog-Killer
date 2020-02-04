@@ -2,6 +2,7 @@
 using BacklogKiller.Resources.Languages.Services;
 using Flunt.Notifications;
 using Flunt.Validations;
+using System;
 using System.IO;
 
 namespace BacklogKiller.ClassLibrary.ValueObjects
@@ -85,7 +86,7 @@ namespace BacklogKiller.ClassLibrary.ValueObjects
                 FileStream fs = File.Open(filename, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
                 fs.Close();
             }
-            catch (IOException)
+            catch
             {
                 Locked = true;
             }
