@@ -50,6 +50,7 @@ namespace BacklogKiller
             lblRootDirectory.Text = _languageService.GetString(Strings.ProjectRootDirectory);
             tsbAnalyze.Text = _languageService.GetString(Strings.Analyze);
             tsbAnalyze.ToolTipText = tsbAnalyze.Text;
+            lblFilters.Text = _languageService.GetString(Strings.Filters);
         }
 
         private void ShowVersion()
@@ -73,6 +74,7 @@ namespace BacklogKiller
             {
                 var configurationViewModel = serializeService.Deserialize(_pathFileFormState);
                 txtProjectDirectoryRoot.Text = configurationViewModel.Directory;
+                txtFilters.Text = configurationViewModel.Filters;
 
                 dgvSubstitutions.AllowUserToAddRows = false;
                 dgvSubstitutions.AllowUserToDeleteRows = false;
@@ -109,7 +111,10 @@ namespace BacklogKiller
                 File.Delete(_pathFileFormState);
 
             var configuration = GetConfiguration();
-            var configurationViewModel = new ConfigurationViewModel { Directory = configuration.ProjectDirectory.Path };
+            var configurationViewModel = new ConfigurationViewModel { 
+                Directory = configuration.ProjectDirectory.Path ,
+                Filters = txtFilters.Text
+            };
             foreach (var subs in configuration.Substitutions)
             {
                 configurationViewModel.Substitutions.Add(
@@ -207,7 +212,7 @@ namespace BacklogKiller
         {
             var substitutions = GetSubstitutions();
             var directory = new CodeDirectory(txtProjectDirectoryRoot.Text);
-            var config = new Configuration(directory, substitutions);
+            var config = new Configuration(directory, substitutions, txtFilters.Text);
             return config;
         }
 
@@ -287,6 +292,11 @@ namespace BacklogKiller
 
             dgvSubstitutions.AllowUserToAddRows = true;
             dgvSubstitutions.AllowUserToDeleteRows = true;
-        }      
+        }
+
+        private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveConfiguration();
+        }
     }
 }

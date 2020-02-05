@@ -2,16 +2,19 @@
 using BacklogKiller.Resources.Languages.Services;
 using Flunt.Notifications;
 using Flunt.Validations;
+using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace BacklogKiller.ClassLibrary.ValueObjects
 {
     public class Configuration : Notifiable
     {
+        public string Filters { get; private set; }
         public CodeDirectory ProjectDirectory { get; private set; }
         public List<Replacement> Substitutions { get; private set; }
 
-        public Configuration(CodeDirectory projectDirectory, List<Replacement> substitutions)
+        public Configuration(CodeDirectory projectDirectory, List<Replacement> substitutions, string filters)
         {
             var languageService = new LanguageService();
 
@@ -25,6 +28,7 @@ namespace BacklogKiller.ClassLibrary.ValueObjects
 
             ProjectDirectory = projectDirectory;
             Substitutions = substitutions;
+            Filters = String.IsNullOrEmpty(filters) ? "*.*" : filters;
         }
 
         public string ReplaceAll(string text)

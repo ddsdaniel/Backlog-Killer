@@ -147,6 +147,9 @@
   <data name="FilesMustBeDifferent" xml:space="preserve">
     <value>Arquivos devem ser diferentes</value>
   </data>
+  <data name="Filters" xml:space="preserve">
+    <value>Filtros</value>
+  </data>
   <data name="FindAndReplaceWithMustBeDifferent" xml:space="preserve">
     <value>'Localizar' e 'Substituir por' devem ser diferentes</value>
   </data>

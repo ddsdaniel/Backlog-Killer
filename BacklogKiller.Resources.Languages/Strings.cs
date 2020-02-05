@@ -24,6 +24,7 @@
         FindNotInCamelCaseFormat,
         ReplaceWithNotInCamelCaseFormat,
         DoYouAcceptTheFollowingSuggestions,
-        Done
+        Done,
+        Filters
     }
 }

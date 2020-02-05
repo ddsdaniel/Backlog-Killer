@@ -19,8 +19,9 @@ namespace BacklogKiller.ClassLibrary.Services
 
         public List<ModifiedCodeFile> GetFiles()
         {
-            var codeFiles = Directory
-                .GetFiles(Configuration.ProjectDirectory.Path, "*.*", SearchOption.AllDirectories)
+            var codeFiles = Configuration.Filters
+                .Split(';')
+                .SelectMany(filter => Directory.GetFiles(Configuration.ProjectDirectory.Path, filter, SearchOption.AllDirectories))
                 .ToList()
                 .FindAll(f => !CodeFile.IsLocked(f))
                 .Select(path => new CodeFile(path, Configuration.ProjectDirectory, File.ReadAllText(path)))

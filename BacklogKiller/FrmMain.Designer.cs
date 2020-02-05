@@ -35,6 +35,8 @@
             this.txtProjectDirectoryRoot = new System.Windows.Forms.TextBox();
             this.btnOpenDirectoryDialog = new System.Windows.Forms.Button();
             this.lblRootDirectory = new System.Windows.Forms.Label();
+            this.txtFilters = new System.Windows.Forms.TextBox();
+            this.lblFilters = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSubstitutions)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -48,7 +50,7 @@
             this.dgvSubstitutions.Location = new System.Drawing.Point(12, 93);
             this.dgvSubstitutions.Name = "dgvSubstitutions";
             this.dgvSubstitutions.Size = new System.Drawing.Size(935, 335);
-            this.dgvSubstitutions.TabIndex = 2;
+            this.dgvSubstitutions.TabIndex = 3;
             this.dgvSubstitutions.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSubstitutions_CellEndEdit);
             // 
             // toolStrip1
@@ -107,11 +109,30 @@
             this.lblRootDirectory.TabIndex = 13;
             this.lblRootDirectory.Text = "Project root directory";
             // 
+            // txtFilters
+            // 
+            this.txtFilters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtFilters.Location = new System.Drawing.Point(485, 48);
+            this.txtFilters.Name = "txtFilters";
+            this.txtFilters.Size = new System.Drawing.Size(462, 20);
+            this.txtFilters.TabIndex = 2;
+            // 
+            // lblFilters
+            // 
+            this.lblFilters.AutoSize = true;
+            this.lblFilters.Location = new System.Drawing.Point(482, 32);
+            this.lblFilters.Name = "lblFilters";
+            this.lblFilters.Size = new System.Drawing.Size(34, 13);
+            this.lblFilters.TabIndex = 15;
+            this.lblFilters.Text = "Filters";
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(959, 440);
+            this.Controls.Add(this.lblFilters);
+            this.Controls.Add(this.txtFilters);
             this.Controls.Add(this.lblRootDirectory);
             this.Controls.Add(this.btnOpenDirectoryDialog);
             this.Controls.Add(this.txtProjectDirectoryRoot);
@@ -121,6 +142,7 @@
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Backlog Killer - DDS Sistemas";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
             this.Load += new System.EventHandler(this.FrmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvSubstitutions)).EndInit();
             this.toolStrip1.ResumeLayout(false);
@@ -139,6 +161,8 @@
         private System.Windows.Forms.TextBox txtProjectDirectoryRoot;
         private System.Windows.Forms.Button btnOpenDirectoryDialog;
         private System.Windows.Forms.Label lblRootDirectory;
+        private System.Windows.Forms.TextBox txtFilters;
+        private System.Windows.Forms.Label lblFilters;
     }
 }
 
