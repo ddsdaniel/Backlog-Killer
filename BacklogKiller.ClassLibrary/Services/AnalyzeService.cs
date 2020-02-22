@@ -30,7 +30,7 @@ namespace BacklogKiller.ClassLibrary.Services
                 .ToList()
                 .FindAll(f => !skippedFilesGitIgnore.Any(sf => f.StartsWith(sf)))
                 .FindAll(f => !CodeFile.IsLocked(f))
-                .Select(path => new CodeFile(path, Configuration.ProjectDirectory, File.ReadAllText(path)))
+                .Select(path => new CodeFile(path, Configuration.ProjectDirectory, File.ReadAllText(path, Encoding.UTF8)))
                 .ToList();
 
             codeFiles.RemoveAll(cf => !cf.IsUseful());
@@ -102,7 +102,7 @@ namespace BacklogKiller.ClassLibrary.Services
             if (File.Exists(modifiedFullPath))
                 File.Delete(modifiedFullPath);
 
-            File.WriteAllText(modifiedFullPath, modifiedContent);
+            File.WriteAllText(modifiedFullPath, modifiedContent, Encoding.UTF8);
 
             CodeFile modifiedFile = new CodeFile(modifiedFullPath, tempDirectory, modifiedContent);
 
@@ -117,7 +117,7 @@ namespace BacklogKiller.ClassLibrary.Services
                 var directory = Path.GetDirectoryName(path);
                 if (!Directory.Exists(directory))
                     Directory.CreateDirectory(directory);
-                File.WriteAllText(path, file.ModifiedFile.Content);
+                File.WriteAllText(path, file.ModifiedFile.Content, Encoding.UTF8);
             }
         }
     }
