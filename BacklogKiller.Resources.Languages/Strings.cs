@@ -20,6 +20,11 @@
         OverrideListMustNotBeEmpty,
         FilesMustBeDifferent,
         FindCannotBeNullOrEmpty,
-        FindAndReplaceWithMustBeDifferent
+        FindAndReplaceWithMustBeDifferent,
+        FindNotInCamelCaseFormat,
+        ReplaceWithNotInCamelCaseFormat,
+        DoYouAcceptTheFollowingSuggestions,
+        Done,
+        Filters
     }
 }

@@ -178,7 +178,7 @@ namespace BacklogKiller
 
             _analyzeService.GenerateFiles(files);
 
-            //TODO: feedback
+            snackBar1.Show(_languageService.GetString(Strings.Done));
         }
     }
 }
