@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
@@ -55,9 +56,7 @@ namespace BacklogKiller
 
         private void ShowVersion()
         {
-            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            var fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
-            Text += $" - {fvi.FileVersion}";
+            Text += $" - {Assembly.GetExecutingAssembly().GetName().Version.ToString(3)}";
         }
 
         private void RecoveryFormState()
