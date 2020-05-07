@@ -88,7 +88,7 @@ namespace BacklogKiller.ClassLibrary.Services
 
         private ModifiedCodeFile ToModifiedCodeFile(CodeFile originalFile)
         {
-            var modifiedRelativePath = Configuration.ReplaceAll(originalFile.RelativePath);
+            var modifiedRelativePath = Configuration.ReplaceAll(originalFile.RelativePath, false);
             var modifiedFullPath = Path.GetTempPath() + modifiedRelativePath;
             var modifiedContent = Configuration.ReplaceAll(originalFile.Content);
 

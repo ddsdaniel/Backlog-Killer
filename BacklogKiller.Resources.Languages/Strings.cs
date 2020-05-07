@@ -25,6 +25,7 @@
         ReplaceWithNotInCamelCaseFormat,
         DoYouAcceptTheFollowingSuggestions,
         Done,
-        Filters
+        Filters,
+        AfterSubstitutions
     }
 }

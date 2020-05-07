@@ -6,7 +6,6 @@ using BacklogKiller.Resources.Languages;
 using BacklogKiller.Resources.Languages.Services;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -39,7 +38,8 @@ namespace BacklogKiller
 
             ShowVersion();
 
-            FormatDgvSubstitutions();
+            FormatDataGridViewSubstitutions(dgvSubstitutions);
+            FormatDataGridViewSubstitutions(dgvAfterSubstitutions);
             RecoveryFormState();
         }
 
@@ -47,7 +47,8 @@ namespace BacklogKiller
         {
             _languageService = new LanguageService();
 
-            lblSubstitutions.Text = _languageService.GetString(Strings.Substitutions);
+            tabSubstitutions.Text = _languageService.GetString(Strings.Substitutions);
+            tabAfterSubstitutions.Text = _languageService.GetString(Strings.AfterSubstitutions);
             lblRootDirectory.Text = _languageService.GetString(Strings.ProjectRootDirectory);
             tsbAnalyze.Text = _languageService.GetString(Strings.Analyze);
             tsbAnalyze.ToolTipText = tsbAnalyze.Text;
@@ -74,34 +75,39 @@ namespace BacklogKiller
                 var configurationViewModel = serializeService.Deserialize(_pathFileFormState);
                 txtProjectDirectoryRoot.Text = configurationViewModel.Directory;
                 txtFilters.Text = configurationViewModel.Filters;
-
-                dgvSubstitutions.AllowUserToAddRows = false;
-                dgvSubstitutions.AllowUserToDeleteRows = false;
-
-                foreach (var subs in configurationViewModel.Substitutions)
-                {
-                    dgvSubstitutions.Rows.Add();
-
-                    dgvSubstitutions.Rows[dgvSubstitutions.Rows.Count - 1].Cells[(int)Column.Find].Value = subs.Find;
-                    dgvSubstitutions.Rows[dgvSubstitutions.Rows.Count - 1].Cells[(int)Column.ReplaceWith].Value = subs.ReplaceWith;
-                }
-
-                dgvSubstitutions.AllowUserToAddRows = true;
-                dgvSubstitutions.AllowUserToDeleteRows = true;
+                LoadSubstitutions(dgvSubstitutions, configurationViewModel.Substitutions);
+                LoadSubstitutions(dgvAfterSubstitutions, configurationViewModel.AfterSubstitutions);
             }
         }
 
-        private void FormatDgvSubstitutions()
+        private void LoadSubstitutions(DataGridView dataGridView, List<ReplacementViewModel> replacementViewModels)
         {
-            dgvSubstitutions.ColumnCount = 2;
-            dgvSubstitutions.Columns[(int)Column.Find].HeaderText = _languageService.GetString(Strings.ToLocate);
-            dgvSubstitutions.Columns[(int)Column.Find].Width = (dgvSubstitutions.Width / 2) - 20;
+            dataGridView.AllowUserToAddRows = false;
+            dataGridView.AllowUserToDeleteRows = false;
 
-            dgvSubstitutions.Columns[(int)Column.ReplaceWith].HeaderText = _languageService.GetString(Strings.ReplaceWith);
-            dgvSubstitutions.Columns[(int)Column.ReplaceWith].Width = dgvSubstitutions.Columns[(int)Column.Find].Width;
+            foreach (var subs in replacementViewModels)
+            {
+                dataGridView.Rows.Add();
 
-            dgvSubstitutions.AllowUserToAddRows = true;
-            dgvSubstitutions.AllowUserToDeleteRows = true;
+                dataGridView.Rows[dataGridView.Rows.Count - 1].Cells[(int)Column.Find].Value = subs.Find;
+                dataGridView.Rows[dataGridView.Rows.Count - 1].Cells[(int)Column.ReplaceWith].Value = subs.ReplaceWith;
+            }
+
+            dataGridView.AllowUserToAddRows = true;
+            dataGridView.AllowUserToDeleteRows = true;
+        }
+
+        private void FormatDataGridViewSubstitutions(DataGridView dataGridView)
+        {
+            dataGridView.ColumnCount = 2;
+            dataGridView.Columns[(int)Column.Find].HeaderText = _languageService.GetString(Strings.ToLocate);
+            dataGridView.Columns[(int)Column.Find].Width = (dataGridView.Width / 2) - 20;
+
+            dataGridView.Columns[(int)Column.ReplaceWith].HeaderText = _languageService.GetString(Strings.ReplaceWith);
+            dataGridView.Columns[(int)Column.ReplaceWith].Width = dataGridView.Columns[(int)Column.Find].Width;
+
+            dataGridView.AllowUserToAddRows = true;
+            dataGridView.AllowUserToDeleteRows = true;
         }
 
         private void SaveConfiguration()
@@ -124,14 +130,24 @@ namespace BacklogKiller
                     });
             }
 
+            foreach (var subs in configuration.AfterSubstitutions)
+            {
+                configurationViewModel.AfterSubstitutions.Add(
+                    new ReplacementViewModel
+                    {
+                        Find = subs.Find,
+                        ReplaceWith = subs.ReplaceWith
+                    });
+            }
+
             var serializeService = new SerializeService<ConfigurationViewModel>();
             serializeService.Serialize(configurationViewModel, _pathFileFormState);
         }
 
-        private List<Replacement> GetSubstitutions()
+        private List<Replacement> GetSubstitutions(DataGridView dataGridView)
         {
             var substitutions = new List<Replacement>();
-            foreach (DataGridViewRow linha in dgvSubstitutions.Rows)
+            foreach (DataGridViewRow linha in dataGridView.Rows)
             {
                 if (linha.IsNewRow || linha.Cells[(int)Column.Find].Value == null || linha.Cells[(int)Column.ReplaceWith].Value == null)
                     continue;
@@ -209,9 +225,10 @@ namespace BacklogKiller
 
         private Configuration GetConfiguration()
         {
-            var substitutions = GetSubstitutions();
+            var substitutions = GetSubstitutions(dgvSubstitutions);
+            var afterSubstitutions = GetSubstitutions(dgvAfterSubstitutions);
             var directory = new CodeDirectory(txtProjectDirectoryRoot.Text);
-            var config = new Configuration(directory, substitutions, txtFilters.Text);
+            var config = new Configuration(directory, substitutions, afterSubstitutions, txtFilters.Text);
             return config;
         }
 
@@ -247,7 +264,7 @@ namespace BacklogKiller
                         replaceWith: replaceWithValue.ToString()
                     );
 
-                var substitutions = GetSubstitutions();
+                var substitutions = GetSubstitutions(dgvSubstitutions);
                 var caseSubstitutionsService = new CaseSubstitutionsService(camelCaseReplacement, substitutions);
                 if (caseSubstitutionsService.Valid)
                 {
@@ -272,25 +289,25 @@ namespace BacklogKiller
             var alert = _languageService.GetString(Strings.Alert);
             if (MessageBox.Show(question.ToString(), alert, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                AddToGrid(suggestions);
+                AddToGrid(dgvSubstitutions, suggestions);
             }
         }
 
-        private void AddToGrid(List<Replacement> suggestions)
+        private void AddToGrid(DataGridView dataGridView, List<Replacement> suggestions)
         {
-            dgvSubstitutions.AllowUserToAddRows = false;
-            dgvSubstitutions.AllowUserToDeleteRows = false;
+            dataGridView.AllowUserToAddRows = false;
+            dataGridView.AllowUserToDeleteRows = false;
 
             foreach (var item in suggestions)
             {
-                dgvSubstitutions.Rows.Add();
+                dataGridView.Rows.Add();
 
-                dgvSubstitutions.Rows[dgvSubstitutions.Rows.Count - 1].Cells[(int)Column.Find].Value = item.Find;
-                dgvSubstitutions.Rows[dgvSubstitutions.Rows.Count - 1].Cells[(int)Column.ReplaceWith].Value = item.ReplaceWith;
+                dataGridView.Rows[dataGridView.Rows.Count - 1].Cells[(int)Column.Find].Value = item.Find;
+                dataGridView.Rows[dataGridView.Rows.Count - 1].Cells[(int)Column.ReplaceWith].Value = item.ReplaceWith;
             }
 
-            dgvSubstitutions.AllowUserToAddRows = true;
-            dgvSubstitutions.AllowUserToDeleteRows = true;
+            dataGridView.AllowUserToAddRows = true;
+            dataGridView.AllowUserToDeleteRows = true;
         }
 
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
