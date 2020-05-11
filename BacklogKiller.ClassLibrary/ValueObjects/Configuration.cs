@@ -43,11 +43,11 @@ namespace BacklogKiller.ClassLibrary.ValueObjects
                 text = newText;
             }
 
-            if (!checkChanged || changed)
-            {
-                foreach (var subs in AfterSubstitutions)
-                    text = subs.Replace(text);
-            }
+            //if (!checkChanged || changed)
+            //{
+            //    foreach (var subs in AfterSubstitutions)
+            //        text = subs.Replace(text);
+            //}
 
             return text;
         }

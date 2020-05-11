@@ -3,7 +3,6 @@ using BacklogKiller.ClassLibrary.ValueObjects;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System;
 
@@ -44,6 +43,12 @@ namespace BacklogKiller.ClassLibrary.Services
             {
                 File.Delete(dupFile.ModifiedFile.FullPath);
                 modifiedFiles.RemoveAll(mf => mf.ModifiedFile.FullPath == dupFile.ModifiedFile.FullPath);
+            }
+
+
+            foreach (var file in modifiedFiles)
+            {
+                file.ModifiedFile.ReplaceAll(Configuration.AfterSubstitutions);
             }
 
             return modifiedFiles;
@@ -106,7 +111,7 @@ namespace BacklogKiller.ClassLibrary.Services
 
             CodeFile modifiedFile = new CodeFile(modifiedFullPath, tempDirectory, modifiedContent);
 
-            return new ModifiedCodeFile(originalFile, modifiedFile);
+            return new ModifiedCodeFile(originalFile, modifiedFile, Configuration);
         }
 
         public void GenerateFiles(List<ModifiedCodeFile> files)
