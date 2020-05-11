@@ -50,6 +50,7 @@ namespace BacklogKiller.ClassLibrary.Services
                 new Replacement(ToFirstLower(findWords), ToFirstLower(replaceWithWords)),
                 new Replacement(ToAllCaps(findWords), ToAllCaps(replaceWithWords)),
                 new Replacement(ToTitle(findWords), ToTitle(replaceWithWords)),
+                new Replacement(ToHyphenSeparated(findWords), ToHyphenSeparated(replaceWithWords)),                
             };
 
             //remove already added
@@ -89,6 +90,14 @@ namespace BacklogKiller.ClassLibrary.Services
                 return "";
 
             return string.Join(" ", words);
+        }
+
+        private string ToHyphenSeparated(string[] words)
+        {
+            if (words.Length == 0)
+                return "";
+
+            return string.Join("-", words).ToLower();
         }
     }
 }
