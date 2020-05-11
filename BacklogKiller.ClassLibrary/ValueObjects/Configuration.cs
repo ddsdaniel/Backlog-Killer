@@ -4,7 +4,6 @@ using Flunt.Notifications;
 using Flunt.Validations;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace BacklogKiller.ClassLibrary.ValueObjects
 {
@@ -13,8 +12,9 @@ namespace BacklogKiller.ClassLibrary.ValueObjects
         public string Filters { get; private set; }
         public CodeDirectory ProjectDirectory { get; private set; }
         public List<Replacement> Substitutions { get; private set; }
+        public List<Replacement> AfterSubstitutions { get; private set; }
 
-        public Configuration(CodeDirectory projectDirectory, List<Replacement> substitutions, string filters)
+        public Configuration(CodeDirectory projectDirectory, List<Replacement> substitutions, List<Replacement> afterSubstitutions, string filters)
         {
             var languageService = new LanguageService();
 
@@ -28,13 +28,26 @@ namespace BacklogKiller.ClassLibrary.ValueObjects
 
             ProjectDirectory = projectDirectory;
             Substitutions = substitutions;
+            AfterSubstitutions = afterSubstitutions;
             Filters = String.IsNullOrEmpty(filters) ? "*.*" : filters;
         }
 
-        public string ReplaceAll(string text)
+        public string ReplaceAll(string text, bool checkChanged = true)
         {
+            var changed = false;
             foreach (var subs in Substitutions)
-                text = subs.Replace(text);
+            {
+                var newText = subs.Replace(text);
+                if (text != newText)
+                    changed = true;
+                text = newText;
+            }
+
+            //if (!checkChanged || changed)
+            //{
+            //    foreach (var subs in AfterSubstitutions)
+            //        text = subs.Replace(text);
+            //}
 
             return text;
         }

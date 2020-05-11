@@ -31,14 +31,21 @@
             this.dgvSubstitutions = new System.Windows.Forms.DataGridView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsbAnalyze = new System.Windows.Forms.ToolStripButton();
-            this.lblSubstitutions = new System.Windows.Forms.Label();
             this.txtProjectDirectoryRoot = new System.Windows.Forms.TextBox();
             this.btnOpenDirectoryDialog = new System.Windows.Forms.Button();
             this.lblRootDirectory = new System.Windows.Forms.Label();
             this.txtFilters = new System.Windows.Forms.TextBox();
             this.lblFilters = new System.Windows.Forms.Label();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabSubstitutions = new System.Windows.Forms.TabPage();
+            this.tabAfterSubstitutions = new System.Windows.Forms.TabPage();
+            this.dgvAfterSubstitutions = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSubstitutions)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabSubstitutions.SuspendLayout();
+            this.tabAfterSubstitutions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAfterSubstitutions)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvSubstitutions
@@ -47,9 +54,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvSubstitutions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvSubstitutions.Location = new System.Drawing.Point(12, 93);
+            this.dgvSubstitutions.Location = new System.Drawing.Point(6, 9);
             this.dgvSubstitutions.Name = "dgvSubstitutions";
-            this.dgvSubstitutions.Size = new System.Drawing.Size(935, 335);
+            this.dgvSubstitutions.Size = new System.Drawing.Size(915, 311);
             this.dgvSubstitutions.TabIndex = 3;
             this.dgvSubstitutions.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSubstitutions_CellEndEdit);
             // 
@@ -71,15 +78,6 @@
             this.tsbAnalyze.Size = new System.Drawing.Size(68, 22);
             this.tsbAnalyze.Text = "Analyze";
             this.tsbAnalyze.Click += new System.EventHandler(this.tsbAnalyze_Click);
-            // 
-            // lblSubstitutions
-            // 
-            this.lblSubstitutions.AutoSize = true;
-            this.lblSubstitutions.Location = new System.Drawing.Point(9, 77);
-            this.lblSubstitutions.Name = "lblSubstitutions";
-            this.lblSubstitutions.Size = new System.Drawing.Size(67, 13);
-            this.lblSubstitutions.TabIndex = 9;
-            this.lblSubstitutions.Text = "Substitutions";
             // 
             // txtProjectDirectoryRoot
             // 
@@ -126,19 +124,64 @@
             this.lblFilters.TabIndex = 15;
             this.lblFilters.Text = "Filters";
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Controls.Add(this.tabSubstitutions);
+            this.tabControl1.Controls.Add(this.tabAfterSubstitutions);
+            this.tabControl1.Location = new System.Drawing.Point(12, 76);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(935, 352);
+            this.tabControl1.TabIndex = 16;
+            // 
+            // tabSubstitutions
+            // 
+            this.tabSubstitutions.Controls.Add(this.dgvSubstitutions);
+            this.tabSubstitutions.Location = new System.Drawing.Point(4, 22);
+            this.tabSubstitutions.Name = "tabSubstitutions";
+            this.tabSubstitutions.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSubstitutions.Size = new System.Drawing.Size(927, 326);
+            this.tabSubstitutions.TabIndex = 0;
+            this.tabSubstitutions.Text = "Substitutions";
+            this.tabSubstitutions.UseVisualStyleBackColor = true;
+            // 
+            // tabAfterSubstitutions
+            // 
+            this.tabAfterSubstitutions.Controls.Add(this.dgvAfterSubstitutions);
+            this.tabAfterSubstitutions.Location = new System.Drawing.Point(4, 22);
+            this.tabAfterSubstitutions.Name = "tabAfterSubstitutions";
+            this.tabAfterSubstitutions.Padding = new System.Windows.Forms.Padding(3);
+            this.tabAfterSubstitutions.Size = new System.Drawing.Size(927, 326);
+            this.tabAfterSubstitutions.TabIndex = 1;
+            this.tabAfterSubstitutions.Text = "After substitutions";
+            this.tabAfterSubstitutions.UseVisualStyleBackColor = true;
+            // 
+            // dgvAfterSubstitutions
+            // 
+            this.dgvAfterSubstitutions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvAfterSubstitutions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvAfterSubstitutions.Location = new System.Drawing.Point(6, 8);
+            this.dgvAfterSubstitutions.Name = "dgvAfterSubstitutions";
+            this.dgvAfterSubstitutions.Size = new System.Drawing.Size(915, 311);
+            this.dgvAfterSubstitutions.TabIndex = 4;
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(959, 440);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.lblFilters);
             this.Controls.Add(this.txtFilters);
             this.Controls.Add(this.lblRootDirectory);
             this.Controls.Add(this.btnOpenDirectoryDialog);
             this.Controls.Add(this.txtProjectDirectoryRoot);
-            this.Controls.Add(this.lblSubstitutions);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.dgvSubstitutions);
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Backlog Killer - DDS Sistemas";
@@ -147,6 +190,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvSubstitutions)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabSubstitutions.ResumeLayout(false);
+            this.tabAfterSubstitutions.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAfterSubstitutions)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -156,13 +203,16 @@
 
         private System.Windows.Forms.DataGridView dgvSubstitutions;        
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.Label lblSubstitutions;
         private System.Windows.Forms.ToolStripButton tsbAnalyze;
         private System.Windows.Forms.TextBox txtProjectDirectoryRoot;
         private System.Windows.Forms.Button btnOpenDirectoryDialog;
         private System.Windows.Forms.Label lblRootDirectory;
         private System.Windows.Forms.TextBox txtFilters;
         private System.Windows.Forms.Label lblFilters;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabSubstitutions;
+        private System.Windows.Forms.TabPage tabAfterSubstitutions;
+        private System.Windows.Forms.DataGridView dgvAfterSubstitutions;
     }
 }
 

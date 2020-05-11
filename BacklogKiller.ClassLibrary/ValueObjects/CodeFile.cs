@@ -3,7 +3,9 @@ using BacklogKiller.Resources.Languages.Services;
 using Flunt.Notifications;
 using Flunt.Validations;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace BacklogKiller.ClassLibrary.ValueObjects
 {
@@ -67,6 +69,21 @@ namespace BacklogKiller.ClassLibrary.ValueObjects
             }
             return false;
         }
+
+        internal void ReplaceAll(List<Replacement> substitutions)
+        {
+            if (File.Exists(FullPath))
+                File.Delete(FullPath);
+
+            foreach (var subs in substitutions)
+            {
+                Content = Content.Replace(subs.Find, subs.ReplaceWith);
+                FullPath = FullPath.Replace(subs.Find, subs.ReplaceWith);
+                RelativePath = RelativePath.Replace(subs.Find, subs.ReplaceWith);
+            }
+
+            File.WriteAllText(FullPath, Content, Encoding.UTF8);
+        }        
 
         public override bool Equals(object obj)
         {
