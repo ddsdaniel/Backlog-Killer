@@ -45,13 +45,21 @@ namespace BacklogKiller.ClassLibrary.Services
                 modifiedFiles.RemoveAll(mf => mf.ModifiedFile.FullPath == dupFile.ModifiedFile.FullPath);
             }
 
-
             foreach (var file in modifiedFiles)
             {
                 file.ModifiedFile.ReplaceAll(Configuration.AfterSubstitutions);
             }
 
+            modifiedFiles = modifiedFiles
+                .Where(f => !f.IsNew() || HasAffected(f))
+                .ToList();
+
             return modifiedFiles;
+        }
+
+        private bool HasAffected(ModifiedCodeFile file)
+        {
+            return Configuration.Substitutions.Any(s => file.ModifiedFile.RelativePath.Contains(s.ReplaceWith));
         }
 
         private static List<string> GetSkippedFilesGitIgnore(string rootPath)

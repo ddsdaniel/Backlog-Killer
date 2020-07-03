@@ -1,4 +1,5 @@
-﻿using BacklogKiller.Resources.Languages;
+﻿
+using BacklogKiller.Resources.Languages;
 using BacklogKiller.Resources.Languages.Services;
 using Flunt.Notifications;
 using Flunt.Validations;
@@ -81,6 +82,10 @@ namespace BacklogKiller.ClassLibrary.ValueObjects
                 FullPath = FullPath.Replace(subs.Find, subs.ReplaceWith);
                 RelativePath = RelativePath.Replace(subs.Find, subs.ReplaceWith);
             }
+
+            var directoryPath = Path.GetDirectoryName(FullPath);
+            if (!Directory.Exists(directoryPath))
+                Directory.CreateDirectory(directoryPath);
 
             File.WriteAllText(FullPath, Content, Encoding.UTF8);
         }        
