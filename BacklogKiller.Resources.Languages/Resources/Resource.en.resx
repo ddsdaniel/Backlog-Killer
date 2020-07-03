@@ -126,6 +126,9 @@
   <data name="Analyze" xml:space="preserve">
     <value>Analyze</value>
   </data>
+  <data name="CheckAll" xml:space="preserve">
+    <value>Check all</value>
+  </data>
   <data name="DirectoryNotFound" xml:space="preserve">
     <value>Directory not found</value>
   </data>

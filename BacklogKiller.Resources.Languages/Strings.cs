@@ -26,6 +26,7 @@
         DoYouAcceptTheFollowingSuggestions,
         Done,
         Filters,
-        AfterSubstitutions
+        AfterSubstitutions,
+        CheckAll
     }
 }

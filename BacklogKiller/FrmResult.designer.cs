@@ -30,6 +30,7 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabNewFiles = new System.Windows.Forms.TabPage();
+            this.btnCheckAll = new System.Windows.Forms.Button();
             this.btnGenerateSelectedFiles = new System.Windows.Forms.Button();
             this.lvwNewFiles = new System.Windows.Forms.ListView();
             this.tabModifiedFiles = new System.Windows.Forms.TabPage();
@@ -51,10 +52,11 @@
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(775, 426);
-            this.tabControl1.TabIndex = 12;
+            this.tabControl1.TabIndex = 0;
             // 
             // tabNewFiles
             // 
+            this.tabNewFiles.Controls.Add(this.btnCheckAll);
             this.tabNewFiles.Controls.Add(this.btnGenerateSelectedFiles);
             this.tabNewFiles.Controls.Add(this.lvwNewFiles);
             this.tabNewFiles.Location = new System.Drawing.Point(4, 22);
@@ -65,13 +67,24 @@
             this.tabNewFiles.Text = "New files";
             this.tabNewFiles.UseVisualStyleBackColor = true;
             // 
+            // btnCheckAll
+            // 
+            this.btnCheckAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCheckAll.Location = new System.Drawing.Point(6, 371);
+            this.btnCheckAll.Name = "btnCheckAll";
+            this.btnCheckAll.Size = new System.Drawing.Size(89, 23);
+            this.btnCheckAll.TabIndex = 1;
+            this.btnCheckAll.Text = "Check &all";
+            this.btnCheckAll.UseVisualStyleBackColor = true;
+            this.btnCheckAll.Click += new System.EventHandler(this.btnCheckAll_Click);
+            // 
             // btnGenerateSelectedFiles
             // 
             this.btnGenerateSelectedFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnGenerateSelectedFiles.Location = new System.Drawing.Point(6, 371);
+            this.btnGenerateSelectedFiles.Location = new System.Drawing.Point(101, 371);
             this.btnGenerateSelectedFiles.Name = "btnGenerateSelectedFiles";
             this.btnGenerateSelectedFiles.Size = new System.Drawing.Size(161, 23);
-            this.btnGenerateSelectedFiles.TabIndex = 11;
+            this.btnGenerateSelectedFiles.TabIndex = 2;
             this.btnGenerateSelectedFiles.Text = "Generate selected(s) file(s)";
             this.btnGenerateSelectedFiles.UseVisualStyleBackColor = true;
             this.btnGenerateSelectedFiles.Click += new System.EventHandler(this.btnGenerateSelectedFiles_Click);
@@ -85,7 +98,7 @@
             this.lvwNewFiles.Location = new System.Drawing.Point(6, 6);
             this.lvwNewFiles.Name = "lvwNewFiles";
             this.lvwNewFiles.Size = new System.Drawing.Size(755, 359);
-            this.lvwNewFiles.TabIndex = 10;
+            this.lvwNewFiles.TabIndex = 0;
             this.lvwNewFiles.UseCompatibleStateImageBehavior = false;
             // 
             // tabModifiedFiles
@@ -149,5 +162,6 @@
         private System.Windows.Forms.ListView lvwModifiedFiles;
         private System.Windows.Forms.Button btnGenerateSelectedFiles;
         private Controls.SnackBar snackBar1;
+        private System.Windows.Forms.Button btnCheckAll;
     }
 }

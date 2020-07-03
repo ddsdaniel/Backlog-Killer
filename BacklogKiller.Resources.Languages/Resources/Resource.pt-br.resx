@@ -126,6 +126,9 @@
   <data name="Analyze" xml:space="preserve">
     <value>Analisar</value>
   </data>
+  <data name="CheckAll" xml:space="preserve">
+    <value>Marcar todos</value>
+  </data>
   <data name="DirectoryNotFound" xml:space="preserve">
     <value>Diretório não encontrado</value>
   </data>

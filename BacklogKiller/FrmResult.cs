@@ -51,6 +51,7 @@ namespace BacklogKiller
             tabNewFiles.Text = _languageService.GetString(Strings.NewFiles);
             tabModifiedFiles.Text = _languageService.GetString(Strings.ModifiedFiles);
             btnGenerateSelectedFiles.Text = _languageService.GetString(Strings.GenerateSelectedFiles);
+            btnCheckAll.Text = _languageService.GetString(Strings.CheckAll);
         }
 
         private void FormatListView(ListView listView)
@@ -179,6 +180,14 @@ namespace BacklogKiller
             _analyzeService.GenerateFiles(files);
 
             snackBar1.Show(_languageService.GetString(Strings.Done));
+        }
+
+        private void btnCheckAll_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in lvwNewFiles.Items)
+            {
+                item.Checked = true;
+            }
         }
     }
 }
