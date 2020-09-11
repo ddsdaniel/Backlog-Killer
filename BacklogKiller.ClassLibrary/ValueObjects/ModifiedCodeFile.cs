@@ -29,7 +29,13 @@ namespace BacklogKiller.ClassLibrary.ValueObjects
             Configuration = configuration;
         }
 
-        public bool IsNew() => !File.Exists(Path.Combine(Configuration.ProjectDirectory.Path, ModifiedFile.RelativePath.Substring(1)));
+        public bool IsNew()
+        {
+            var relativeFileName = ModifiedFile.RelativePath.StartsWith("\\")
+                ? ModifiedFile.RelativePath.Substring(1)
+                : ModifiedFile.RelativePath;
+            return !File.Exists(Path.Combine(Configuration.ProjectDirectory.Path, relativeFileName));
+        }
 
         public override string ToString() => ModifiedFile.RelativePath;
     }
